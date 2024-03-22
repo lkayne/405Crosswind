@@ -13,7 +13,7 @@ cdb75 = [3.326838767 0.8233412321 0.8357756949 0.8819088131 0.9193595311 0.94240
 semilogx(reb75,cdb75, "-*");
 
 reb60 = [4807.593723 14999.69242 20961.10863 26153.30985 31730.11857 36922.31979 42306.82476 47114.41849];
-cdb60 = [0.1863840114 0.04804904626 0.04411413205 0.0464865535 0.04860953184 0.0471738619 0.04501277316 0.04495038146];
+cdb60 = [3.880981665 1.000501417 0.9185666537 0.9679664068 1.01217213 0.9822778882 0.9372786111 0.9359794596];
 
 semilogx(reb60,cdb60, "-square");
 
@@ -47,7 +47,7 @@ for i=1:8
     reavg(i) = (reb90(i)+reb75(i)+reb60(i)+reb45(i)+reb30(i)+reb15(i)+reb0(i))/7;
 end
 
-semilogx(reavg,cdavg, "-o",'LineWidth',4);
+semilogx(reavg,cdavg,"-o", 'LineWidth',4);
 
 
 legend("90^{o}","75^{o}","60^{o}","45^{o}","30^{o}","15^{o}","0^{o}", "Average");
@@ -178,7 +178,7 @@ resavg(6) = (res90(6)+res0(6)+res15(3)+res30(3)+res45(3)+res60(3)+res75(3))/7;
 resavg(7) = (res90(7)+res0(7))/2;
 resavg(8) = (res90(8)+res0(8)+res15(4)+res30(4)+res45(4)+res60(4)+res75(4))/7;
 
-semilogx(resavg,cdsavg,'linewidth',4);
+semilogx(resavg,cdsavg,"-o",'linewidth',4);
 
 legend("0^{o}","15^{o}","30^{o}","45^{o}","60^{o}","75^{o}","90^{o}","Average");
 title("Re vs C_d for 20mm Ball");
@@ -198,6 +198,7 @@ xlabel("Reynolds Number");
 ylabel("C_d");
 
 %% atlatl
+%with tip
 rea0 = [3781.537932 19411.89472 27731.27817 34033.84138 41596.91725 49159.99311 56723.06897 63025.63219];
 cda0 = [13.53048255 1.460006578 1.401642861 1.442752126 1.382285744 1.372206972 1.358719394 1.353447222];
 
@@ -219,22 +220,34 @@ figure();
 hold on
 semilogx(reavg,cdavg, "-o");
 semilogx(remavg,cdmavg, "-square");
-semilogx(resavg,cdsavg, "-diamond")
-semilogx(reaavg,cdaavg, '-pentagram')
+semilogx(resavg,cdsavg, "-diamond");
+semilogx(reaavg,cdaavg, '-pentagram');
+%no tip
+reab0 = [5546.255633 19663.99724 27731.27817 34033.84138 41596.91725 49159.99311 56723.06897 63025.63219];
+cdab0 = [6.644948589 0.9427741222 1.112948945 1.266792246 1.199288508 1.20805336 1.156239846 1.180276306];
 
-legend("30mm Bola", "25mm Bola", "20mm Bola", "Atlatl");
+reab90 = [5546.255633 20168.2023 27731.27817 34033.84138 41596.91725 49159.99311 56723.06897 63025.63219];
+cdab90 = [7.118217305 1.406245639 1.335385241 1.367340749 1.293942251 1.283353182 1.258045206 1.281063611];
+
+reab45 = [5546.255633 19159.79219 27731.27817 34033.84138 41596.91725 49159.99311 56723.06897 63025.63219];
+cdab45 = [7.236534483 1.468937406 1.288058369 1.335919342 1.243460254 1.224619321 1.191306137 1.227004965];
+
+for i = 1:8
+    reabavg(i) = (reab0(i)+reab45(i)+reab90(i))/3;
+    cdabavg(i) = (cdab0(i)+cdab45(i)+cdab90(i))/3;
+end
+
+semilogx(reabavg,cdabavg,'-^');
+
+for i=1:8
+    re_est(i) = reaavg(i)*1/6+reabavg(i)*5/6;
+    cd_est(i) = cdaavg(i)*1/6+cdabavg(i)*5/6;
+end
+
+semilogx(re_est,cd_est,'-diamond');
+
+legend("30mm Bola", "25mm Bola", "20mm Bola", "Atlatl with tip", "Atlatl without tip","Complete Atlatl");
 title("Re vs C_d for Atlatl Model and Bola Models");
 xlabel("Reynolds Number");
 ylabel("C_d");
-
-
-
-
-
-
-
-
-
-
-
 
